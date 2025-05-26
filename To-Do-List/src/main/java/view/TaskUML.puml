@@ -1,0 +1,52 @@
+@startuml
+package model {
+    class Task {
+        - String title
+        - String description
+        - boolean isDone
+        + Task(String title, String description)
+        + getTitle(): String
+        + getDescription(): String
+        + isDone(): boolean
+        + markAsDone(): void
+        + toString(): String
+    }
+}
+
+package dao {
+    interface TaskDAO {
+        + addTask(Task task): void
+        + listTasks(): List~Task~
+        + markAsDone(int index): void
+    }
+
+    class TaskDAOImpl {
+        - List~Task~ tasks
+        + TaskDAOImpl()
+        + addTask(Task task): void
+        + listTasks(): List~Task~
+        + markAsDone(int index): void
+    }
+    TaskDAOImpl ..|> TaskDAO
+}
+
+package controller {
+    class TaskController {
+        - TaskDAO taskDAO
+        + TaskController(TaskDAO taskDAO)
+        + addTask(String title, String description): void
+        + listTasks(): List~Task~
+        + markTaskAsDone(int index): void
+    }
+}
+
+class TaskApp {
+    + main(String[] args): void
+}
+
+TaskController --> TaskDAO : uses
+TaskDAOImpl ..|> TaskDAO
+TaskController --> Task : creates
+TaskApp --> TaskController : uses
+
+@enduml
