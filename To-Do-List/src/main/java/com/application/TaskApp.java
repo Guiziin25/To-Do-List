@@ -19,7 +19,7 @@ public class TaskApp {
             System.out.println("Digite um comando (add/list/done/exit): ");
             command = scanner.nextLine();
 
-            switch (command) {
+            switch (command.toLowerCase()) {
                 case "add":
                     System.out.println("Título: ");
                     String title = scanner.nextLine();
@@ -44,7 +44,7 @@ public class TaskApp {
                 default:
                     System.out.println("Comando inválido.");
             }
-        } while (!command.equals("exit"));
+        } while (!command.equalsIgnoreCase("exit"));
 
         scanner.close();
     }
